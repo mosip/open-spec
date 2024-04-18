@@ -25,63 +25,63 @@ To tackle the aforementioned challenge and include a face photograph within the 
 # 3.Semantics
 
 Claim 169 represents a JSON Object that includes a range of ID attributes defined by the issuing identity system as key-value pairs. Below, you can find an illustration of the ID JSON structure contained within Claim 169, where:
-### 3.1 JSON Struchture Overview
+### 3.1 JSON Structure Overview
 
-| Attribute | Type  | Attribute Name       | Description                                                                                                      |
-|-----------|-------|----------------------|------------------------------------------------------------------------------------------------------------------|
-| 1         | tstr  | ID                   | Unique ID to indicate the PII data                                                                               |
-| 2         | tstr  | Version              |                                                                                                                  |
-| 3         | tstr  | Language             |                                                                                                                  |
-| 4         | tstr  | Issuing Authority    |                                                                                                                  |
-| 5         | tstr  | First Name           |                                                                                                                  |
-| 6         | tstr  | Middle Name          |                                                                                                                  |
-| 7         | tstr  | Last Name            |                                                                                                                  |
-| 8         | tstr  | Full Name            |                                                                                                                  |
-| 9         | tstr  | Gender               |                                                                                                                  |
-| 10        | tstr  | Date of Birth        |                                                                                                                  |
-| 11        | tstr  | Address              | Address of the citizen with address line separator character `\n`                                                |
-| 12        | [int] | Best Quality Fingers |                                                                                                                  |
-| 13        | tstr  | Binary Image         | Binary image data representing the citizen's photograph                                                          |
-| 14        | tstr  | Email ID             |                                                                                                                  |
-| 15        | tstr  | Phone Number         |                                                                                                                  |
-| 16        | tstr  | Martial Status       |                                                                                                                  |
-| 17        | tstr  | Nationality          |                                                                                                                  |
-| 18        | tstr  | Guardian             | Entity playing the role of a guardian of the citizen such as mother, father, spouse, sister, legal guardian etc. |
-| 19        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 20        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 21        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 22        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 23        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 24        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 24        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 26        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 27        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 28        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 29        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 30        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 31        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 32        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 33        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 34        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 35        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 36        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 37        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 38        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 39        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 40        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 41        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 42        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 43        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 44        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 45        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 46        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 47        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 48        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 49        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
-| 50        | tstr  | Additional attribute | Reserved for future attributes                                                                                   |
+| Attribute | Type  | Attribute Name       | Description                                                                                                                                                                                                                     |
+|-----------|-------|----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1         | tstr  | ID                   | Unique Identification Number of the ID associated to the citizen                                                                                                                                                                                              |
+| 2         | tstr  | Version              | Version of the ID data                                                                                                                                                                                                          |
+| 3         | tstr  | Language             | Preferred language of the citizen                                                                                                                                                                                                             |
+| 4         | tstr  | Issuing Authority    | Issuing authority of the unique identity data                                                                                                                                                                                   |
+| 5         | tstr  | First Name           | First name of the citizen                                                                                                                                                                                                       |
+| 6         | tstr  | Middle Name          | Middle name of the citizen                                                                                                                                                                                                      |
+| 7         | tstr  | Last Name            | Last name of the citizen                                                                                                                                                                                                        |
+| 8         | tstr  | Full Name            | Full name of the citizen                                                                                                                                                                                                        |
+| 9         | tstr  | Gender               | Gender of the citizen                                                                                                                                                                                                           |
+| 10        | tstr  | Date of Birth        | Date of birth of the citizen                                                                                                                                                                                                    |
+| 11        | tstr  | Address              | Address of the citizen with address line separator character `\n`                                                                                                                                                               |
+| 12        | tstr  | Binary Image         | Binary image data representing the citizen's photograph                                                                                                                                                                         |
+| 13        | [int] | Best Quality Fingers | An unsigned 8-bit number encoding hand position of the finger. It must be in range 0-10, where 0 represents "Unknown", 1-5 represents right thumb to little finger, and 6-10 represents left thumb to little finger in sequence |
+| 14        | tstr  | Email ID             | Email id of the citizen                                                                                                                                                                                                         |
+| 15        | tstr  | Phone Number         | Contact number of the citizen                                                                                                                                                                                                   |
+| 16        | tstr  | Martial Status       | Maritial status of the citizen                                                                                                                                                                                                  |
+| 17        | tstr  | Nationality          | Nationality of the citizen                                                                                                                                                                                                      |
+| 18        | tstr  | Guardian             | Name of the entity playing the role of a guardian of the citizen such as mother, father, spouse, sister, legal guardian etc.                                                                                                    |
+| 19        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 20        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 21        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 22        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 23        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 24        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 24        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 26        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 27        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 28        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 29        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 30        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 31        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 32        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 33        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 34        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 35        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 36        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 37        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 38        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 39        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 40        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 41        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 42        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 43        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 44        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 45        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 46        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 47        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 48        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 49        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
+| 50        | tstr  | Additional attribute | Reserved for future attributes                                                                                                                                                                                                  |
 
 
-### 3.2 JSON Struchture Example
+### 3.2 JSON Structure Example
 ```CWT
 {
    "1":"COUN",
@@ -105,7 +105,9 @@ Claim 169 represents a JSON Object that includes a range of ID attributes define
         "13": "03CBABDF83D068ACB5DE65B3CDF25E0036F2C546CB90378C587A076E7A759DFD27CA7872B6CDFF339AEAACA61A6023FD1D305A9B4F33CAA248CEDE38B67D7C915C59A51BB4E77D10077A625258873183F82D65F4C482503A5A01F41DEE612C3542E5370987815E592B8EA2020FD3BDDC747897DB10237EAD179E55B441BC6D8BAD07CE535129CF8D559445CC3A29D746FBF1174DE2E7C0F3439BE7DBEA4520CF88825AAE6B1F291A746AB8177C65B2A459DD19BD32C0C3070004B85C1D63034707CC690AB0BA023350C8337FC6894061EB8A714A8F22FE2365E7A904C72DEC9746ABEA1A3296ECACD1A40450794EDCD2B34844E7C19EB7FB1A4AF3B05C3B374BD2941603F72D3F9A62EAB9A2FDAEEEEC8EE6E350F8A1863C0A0AB1B4058D154559A1CD5133EFCF682ABC339960819C9427889D60380B635A7D21D017974BBA57798490F668ADD86DA58125D9C4C1202CA1308F7734E43E8F77CEB0AF968A8F8B88849F9B98B26620399470ED057E7931DED82876DCA896A30D0031A8CBD7B9EDFDF16C15C6853F4F8D9EEC09317C84EDAE4B349FE54D23D8EC7DC9BB9F69FD7B7B23383B64F22E25F",
         "14": "peter@example.com",
         "15": "+1 234-567",
-        "16": "US",
+        "16": "Married",
+        "17": "US",
+        "18": "Jhon Honai",
 }
 ```
 
@@ -115,17 +117,18 @@ This specification registers the `identity-data` claim in the IANA "CBOR Web Tok
 #### 4.1 Registry Contents
 Claim Name: identity-data
 
-Claim Description: Identity Data
+Claim Description: Registering the claim for storing unique identity data of a citizen, which could be personally identifiable data (PII), using any ID platform JWT 
 
-JWT Claim Name: identity-data
+Claim Name: identity-data
 
 Claim Key: 169
 
-Claim Value Type(s): <>
+Claim Value Type(s): map
 
 Change Controller: MOSIP
 
-Specification Document(s): Section 1
+Specification Document(s): [Section 1](#1introduction)
+
 
 # References
 
