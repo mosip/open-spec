@@ -10,13 +10,13 @@
 
 # 1.Introduction
 
-This document specifies a generic data structure and encoding mechanisms for storing Unique Identity Data of a Citizen registered using any ID platforms. It also specifies a transport encoding mechanism in a machine-readable optical format (QR).
+This document specifies a generic data structure and encoding mechanisms for storing the Unique Identity Data of a Citizen registered using any ID platform. It also provides a transport encoding mechanism in a machine-readable optical format (QR).
 
 # 2.Rationale
 
 Once a citizen is registered in an identity system, their data serves as the foundation for identification, granting them access to social benefits and government services. The level of assurance in this identification process varies depending on the authentication method employed. Low assurance is achieved through the use of basic identifiers like ID numbers, demographic data, passwords, or PINs. Conversely, higher assurance levels are attained through methods such as one-time passwords (OTP) or biometrics.
 
-Among these methods, biometric based authentication, such as facial authentication, offers the highest level of assurance as it directly verifies the presence of the citizen. While this is effective for online systems where verification is conducted on a server, offline authentication presents challenges in maintaining a similarly high level of assurance and also works for people with no phone..
+Among these methods, biometric-based authentication, such as facial authentication, offers the highest level of assurance as it directly verifies the presence of the citizen. While this is effective for online systems where verification is conducted on a server, offline authentication presents challenges in maintaining a similarly high level of assurance and also works for people with no phone..
 
 For instance, in scenarios involving cross-border verification, remote areas often face significant internet connectivity issues. Even when internet access is available, server reliability may be inconsistent. In such circumstances, scanning a QR code containing a citizen's facial photograph and identity information, alongside assurance that the data is country-signed, provides an additional layer of security and affirmation for the countries involved.
 
@@ -160,7 +160,7 @@ Claim 169 represents a JSON Object that includes a range of ID attributes define
 ```
 
 ### 4. CBOR Identity Data in QR-Code Claims Registration
-This specification registers the `identity-data` claim in the IANA "CBOR Web Token (CWT) Claims" registry [IANA.CWT.Claims], established by [RFC8392].
+This specification registers the `identity-data` claim in the IANA "CBOR Web Token (CWT) Claims" registry [IANA.CWT.Claims], established by [RFC8392](https://www.iana.org/go/rfc8392).
 
 #### 4.1 Registry Contents
 Claim Name: identity-data
@@ -186,3 +186,7 @@ Specification Document(s): [Section 1](#1introduction)
 # Author
 
 Resham Chugani ([resham@mosip.io](mailto:resham@mosip.io))
+Mahammed Taheer ([mohd.taheer@gmail.com](mailto:mohd.taheer@gmail.com))
+Sasikumar G ([sasi@duck.com](mailto:sasi@duck.com))
+Sreenadh S ([sreeavtar@gmail.com](mailto:sreeavtar@gmail.com))
+Rounak Nayak ([rounak@ooru.io](mailto:rounak@ooru.io))
