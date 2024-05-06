@@ -4,132 +4,58 @@
 
 **Data Item**: JSON Object
 
-**Semantics**: Unique Identity Data of a Citizen in QR-Code
+**Semantics**: Identity Data of a Person in QR-Code
 
 **Point of contact**: Resham Chugani (resham@mosip.io)
 
 # 1.Introduction
 
-This document specifies a generic data structure and encoding mechanisms for storing the Unique Identity Data of a Citizen registered using any ID platform. It also provides a transport encoding mechanism in a machine-readable optical format (QR).
+This document specifies a generic data structure and encoding mechanism for storing the Identity Data of a registered person using any ID platform. It also provides a transport encoding mechanism in a machine-readable optical format (QR).
 
 # 2.Rationale
 
-Once a citizen is registered in an identity system, their data serves as the foundation for identification, granting them access to social benefits and government services. The level of assurance in this identification process varies depending on the authentication method employed. Low assurance is achieved through the use of basic identifiers like ID numbers, demographic data, passwords, or PINs. Conversely, higher assurance levels are attained through methods such as one-time passwords (OTP) or biometrics.
+Once a person is registered in an identity system, their data serves as the foundation for identification, granting them access to social benefits and government services. The level of assurance in this identification process varies depending on the authentication methods employed. Low assurance is achieved through basic identifiers like ID numbers, demographic data, passwords, or PINs. Conversely, higher assurance levels are attained through one-time passwords (OTP) and biometrics.
 
-Among these methods, biometric-based authentication, such as facial authentication, offers the highest level of assurance as it directly verifies the presence of the citizen. While this is effective for online systems where verification is conducted on a server, offline authentication presents challenges in maintaining a similarly high level of assurance and also works for people with no phone..
+Among these methods, biometric-based authentication, such as facial authentication, offers the highest level of assurance as it assures the presence of the individual. While this is effective for online systems & personal phones where verification is conducted on a server or a personal device; offline authentication presents challenges in maintaining a similarly high level of assurance. The offline authentication mechanism should work for people with no phone.
 
-For instance, in scenarios involving cross-border verification, remote areas often face significant internet connectivity issues. Even when internet access is available, server reliability may be inconsistent. In such circumstances, scanning a QR code containing a citizen's facial photograph and identity information, alongside assurance that the data is country-signed, provides an additional layer of security and affirmation for the countries involved.
+For instance, in a cross-border scenario remote areas often face significant internet connectivity issues. Even when internet access is available, server reliability may be inconsistent. In such circumstances, scanning a QR code containing the person's facial photograph and identity information, alongside assurance that the data is country-signed, provides an additional layer of security and affirmation for the countries involved.
 
-To tackle the aforementioned challenge and include a face photograph within the QR code, we propose a solution that involves embedding a low-resolution grayscale image of the citizen along with a minimal demographic dataset within the QR code. This QR code would be digitally signed by the ID system and then printed on a physical card. Subsequently, the signed data within the QR code can be utilized for facial authentication. However, it's essential to recognize that QR codes have limitations regarding size. To address this, we suggest leveraging CBOR Web Token (CWT) to generate a smaller signature and more condensed data.
+**Please note:** The trust layers required to sync the country's key are beyond the scope of this document. We assume the app scanning the QR code already has the country's key to verify.
+
+To tackle the challenge above, we propose a standard CBOR-based QR Code that involves embedding a low-resolution image of the person with a minimal demographic dataset within the QR code. This QR code would be digitally signed by the ID authorities (Issuer) and then printed on a physical card. Subsequently, the signed data within the QR code can be utilized for facial authentication. However, it's essential to recognize that QR codes have limitations regarding size. We suggest leveraging CBOR Web Token (CWT) with ED25519/ECC keys to generate a smaller signature and more condensed data.
 
 # 3.Semantics
 
-Claim 169 represents a JSON Object that includes a range of ID attributes defined by the issuing identity system as key-value pairs. Below, you can find an illustration of the ID JSON structure contained within Claim 169, where:
-### 3.1 JSON Structure Overview
+Claim 169 represents a JSON Object that includes the below table as ID attributes. You can find an illustration of the ID structure contained within Claim 169, where:
 
-| Attribute | Type  | Attribute Name       | Description                                                                                                                                                                                                                     |
-|-----------|-------|----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1         | tstr  | ID                   | Unique ID to indicate the PII data                                                                                                                                                                                              |
-| 2         | tstr  | Version              | Version of the ID data                                                                                                                                                                                                          |
-| 3         | tstr  | Language             | Language of citizen                                                                                                                                                                                                             |
-| 4         | tstr  | Full Name            | Full name of the citizen                                                                                                                                                                                                        |
-| 5         | tstr  | First Name           | First name of the citizen                                                                                                                                                                                                       |
-| 6         | tstr  | Middle Name          | Middle name of the citizen                                                                                                                                                                                                      |
-| 7         | tstr  | Last Name            | Last name of the citizen                                                                                                                                                                                                        |
-| 8         | tstr  | Date of Birth        | Date of birth of the citizen. Must be in YYYYMMDD format                                                                                                                                                                        |
-| 9         | int   | Gender               | Gender of the citizen. Can contain following values 1 - Male, 2 - Female, 3 - Others                                                                                                                                            |
-| 10        | tstr  | Address              | Address of the citizen with address line separator character `\n`                                                                                                                                                               |
-| 11        | tstr  | Email ID             | Email id of the citizen                                                                                                                                                                                                         |
-| 12        | tstr  | Phone Number         | Contact number of the citizen                                                                                                                                                                                                   |
-| 13        | tstr  | Nationality          | Nationality of the citizen                                                                                                                                                                                                      |
-| 14        | int   | Marital Status       | Marital status of the citizen.Can contain following values 1 - Unmarried, 2 - Married, 3 - Divorced                                                                                                                             |
-| 15        | tstr  | Guardian             | Name of the entity playing the role of a guardian of the citizen such as mother, father, spouse, sister, legal guardian etc.                                                                                                    |
-| 16        | tstr  | Binary Image         | Binary image data representing the citizen's photograph                                                                                                                                                                         |
-| 17        | int   | Binary Image Format  | Binary image format of the binary image data. Can contain following values 1 - JPEG, 2 - JPEG2, 3 - AVIF, 4- WEBP                                                                                                               |
-| 18        | [int] | Best Quality Fingers | An unsigned 8-bit number encoding hand position of the finger. It must be in range 0-10, where 0 represents "Unknown", 1-5 represents right thumb to little finger, and 6-10 represents left thumb to little finger in sequence |
-| 19        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 20        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 21        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 22        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 23        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 24        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 25        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 26        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 27        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 28        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 29        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 30        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 31        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 32        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 33        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 34        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 35        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 36        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 37        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 38        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 39        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 40        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 41        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 42        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 43        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 44        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 45        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 46        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 47        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 48        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 49        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 50        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 51        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 52        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 53        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 54        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 55        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 56        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 57        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 58        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 59        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 60        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 61        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 62        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 63        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 64        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 65        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 66        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 67        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 68        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 69        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 70        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 71        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 72        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 73        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 74        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 75        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 76        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 77        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 78        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 79        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 80        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 81        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 82        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 83        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 84        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 85        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 86        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 87        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 88        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 89        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 90        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 91        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 92        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 93        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 94        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 95        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 96        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 97        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 98        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
-| 99        | tstr  |                      | Reserved for future attributes                                                                                                                                                                                                  |
+## 3.1 CBOR Map Structure Overview
 
-### 3.2 JSON Structure Example
+**All the fields here are Optional**
+
+| Attribute | Type  | Attribute Name       | Description                                   |
+|-----------|-------|----------------------|-----------------------------------------------|
+| 1         | tstr  | ID                   | Unique ID to indicate the PII data            |
+| 2         | tstr  | Version              | Version of the ID data                        |
+| 3         | tstr  | Language             | Language used in other attributes             |
+| 4         | tstr  | Full Name            | Full name of the  person                      |
+| 5         | tstr  | First Name           | First name of the person                      |
+| 6         | tstr  | Middle Name          | Middle name of the person                     |
+| 7         | tstr  | Last Name            | Last name of the person                       |
+| 8         | tstr  | Date of Birth        | Date of birth in YYYYMMDD format              |
+| 9         | int   | Gender               | Gender with the following values 1 - Male, 2 - Female, 3 - Others                                                                                 |
+| 10        | tstr  | Address              | Address of the person separator character `\n`|
+| 11        | tstr  | Email ID             | Email id of the person                        |
+| 12        | tstr  | Phone Number         | Contact number of the person                  |
+| 13        | tstr  | Nationality          | Nationality of the person                     |
+| 14        | int   | Marital Status       | Marital status - Can contain the following values 1 - Unmarried, 2 - Married, 3 - Divorced                                                       |
+| 15        | tstr  | Guardian             | Name/id of the entity playing the role of a guardian, such as a mother, father, spouse, sister, legal guardian etc.                              |
+| 16        | tstr  | Binary Image         | Binary image of the person's photograph       |
+| 17        | int   | Binary Image Format  | Binary image format. Can contain the following values 1 - JPEG, 2 - JPEG2, 3 - AVIF, 4- WEBP                                                     |
+| 18        | [int] | Best Quality Fingers | An unsigned 8-bit number encoding the hand position of the finger. It must be in the range 0-10, where 0 represents "Unknown", 1-5 represents right thumb to little finger, and 6-10 represents left thumb to little finger in sequence              |
+| 19.. 99   | tstr  | Reserved             | Reserved for future attributes                |
+
+
+## 3.2 CBOR Map Structure Example
 ```CWT
 {
    "1":"COUN",
@@ -159,13 +85,13 @@ Claim 169 represents a JSON Object that includes a range of ID attributes define
 }
 ```
 
-### 4. CBOR Identity Data in QR-Code Claims Registration
+# 4. CBOR Identity Data in QR-Code Claims Registration
 This specification registers the `identity-data` claim in the IANA "CBOR Web Token (CWT) Claims" registry [IANA.CWT.Claims], established by [RFC8392](https://www.iana.org/go/rfc8392).
 
-#### 4.1 Registry Contents
+## 4.1 Registry Contents
 Claim Name: identity-data
 
-Claim Description: Registering the claim for storing unique identity data of a citizen, which could be personally identifiable data (PII), using any ID platform. 
+Claim Description: Registering the claim for storing identity data of a person, which could be personally identifiable data (PII) mostly used in Foundational/National ID for cross-border interoperability.
 
 Claim Key: 169
 
@@ -186,7 +112,11 @@ Specification Document(s): [Section 1](#1introduction)
 # Author
 
 Resham Chugani ([resham@mosip.io](mailto:resham@mosip.io))
+
 Mahammed Taheer ([mohd.taheer@gmail.com](mailto:mohd.taheer@gmail.com))
+
 Sasikumar G ([sasi@duck.com](mailto:sasi@duck.com))
+
 Sreenadh S ([sreeavtar@gmail.com](mailto:sreeavtar@gmail.com))
+
 Rounak Nayak ([rounak@ooru.io](mailto:rounak@ooru.io))
